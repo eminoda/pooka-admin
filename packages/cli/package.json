@@ -1,0 +1,28 @@
+{
+  "name": "@pooka/cli",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Pooka CLI — `pooka add <component>` 等命令",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "pooka": "./bin/pooka.js"
+  },
+  "files": ["bin", "dist"],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "dev": "tsc -p tsconfig.build.json --watch",
+    "lint": "eslint . --max-warnings 0",
+    "type-check": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "cac": "^6.7.14"
+  },
+  "devDependencies": {
+    "@pooka/config": "workspace:*",
+    "@types/node": "^22.13.14",
+    "eslint": "^9.23.0",
+    "typescript": "^5.8.2"
+  }
+}

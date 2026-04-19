@@ -1,0 +1,31 @@
+{
+  "name": "pooka-admin",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@9.15.4",
+  "description": "Pooka Admin — Vue 3 admin component library monorepo (skeleton)",
+  "scripts": {
+    "dev": "turbo dev",
+    "dev:playground": "turbo dev --filter=@pooka/playground",
+    "build": "turbo build",
+    "build:ui": "turbo build --filter=@pooka/ui",
+    "build:core": "turbo build --filter=@pooka/core",
+    "build:cli": "turbo build --filter=@pooka/cli",
+    "lint": "turbo lint",
+    "type-check": "turbo type-check",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "pooka": "pnpm --filter @pooka/cli exec pooka"
+  },
+  "devDependencies": {
+    "@pooka/config": "workspace:*",
+    "eslint": "^9.23.0",
+    "prettier": "^3.5.3",
+    "turbo": "^2.5.0",
+    "typescript": "^5.8.2"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
