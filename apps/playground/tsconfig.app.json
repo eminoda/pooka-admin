@@ -10,11 +10,26 @@
     "verbatimModuleSyntax": true,
     "baseUrl": ".",
     "paths": {
-      "@pooka/ui": ["../../packages/ui/src/index.ts"],
-      "@pooka/core": ["../../packages/core/src/index.ts"],
-      "@pooka/shared": ["../../packages/shared/src/index.ts"],
-      "@pooka/provider": ["../../packages/provider/src/index.ts"]
+      "@pooka/ui": [
+        "../../packages/ui/src/index.ts"
+      ],
+      "@pooka/core": [
+        "../../packages/core/src/index.ts"
+      ],
+      "@pooka/shared": [
+        "../../packages/shared/src/index.ts"
+      ],
+      "@pooka/provider": [
+        "../../packages/provider/src/index.ts"
+      ],
+      "@/*": [
+        "./src/*"
+      ]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue"
+  ]
 }

@@ -3,3 +3,6 @@
  * shadcn-vue 组件将位于 `src/components/ui/*`（或按 components.json 的 aliases）。
  */
 export const pookaUiVersion = '0.0.0';
+export { presetPooka } from './preset';
+export { default as table } from './components/table/Table.vue';
+export { default as form } from './components/form/Form.vue';

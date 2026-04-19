@@ -1,7 +1,1 @@
-/**
- * 全局样式入口 — shadcn-vue / UnoCSS 安装完成后在此引入 reset、主题变量与工具类。
- * Playground 可通过 `import '@pooka/ui/styles.css'` 引用（需在包 exports 中保留）。
- */
-:root {
-  font-family: system-ui, sans-serif;
-}
+/* https://unocss.dev/guide/style-reset#tailwind-v4 */

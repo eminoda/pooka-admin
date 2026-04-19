@@ -1,17 +1,31 @@
 <script setup lang="ts">
-import { pookaRender } from '@pooka/core';
-import { pookaSharedPing } from '@pooka/shared';
-import { pookaUiVersion } from '@pooka/ui';
+import { Button } from '@/components/ui/button';
+import Form from '@/components/ui/form/Form.vue';
+import Table from '@/components/ui/table/Table.vue';
 
-const PookaSchemaView = pookaRender({ type: 'placeholder' });
-const shared = pookaSharedPing();
+const rows = [
+  { id: 1, name: 'Alice', role: 'Admin' },
+  { id: 2, name: 'Bob', role: 'Editor' },
+];
+
+const columns = ['name', 'role'];
 </script>
 
 <template>
-  <main style="padding: 1.5rem; font-family: system-ui, sans-serif">
-    <h1>Pooka Playground</h1>
-    <p>@pooka/ui: {{ pookaUiVersion }}</p>
-    <p>@pooka/shared: {{ shared }}</p>
-    <component :is="PookaSchemaView" />
+  <main class="grid gap-6 p-6">
+    <section class="grid gap-2">
+      <h2 class="text-lg font-semibold">Button</h2>
+      <Button>Shadcn Button</Button>
+    </section>
+
+    <section class="grid gap-2">
+      <h2 class="text-lg font-semibold">Form</h2>
+      <Form />
+    </section>
+
+    <section class="grid gap-2">
+      <h2 class="text-lg font-semibold">Table</h2>
+      <Table :columns="columns" :rows="rows" />
+    </section>
   </main>
 </template>

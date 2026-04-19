@@ -1,11 +1,16 @@
 import path from 'node:path';
 import vue from '@vitejs/plugin-vue';
-import { defineConfig } from 'vite';
+import UnoCSS from 'unocss/vite';
+import { defineConfig, type PluginOption } from 'vite';
 
 export default defineConfig({
-  plugins: [vue()],
+  plugins: [vue(), UnoCSS() as PluginOption],
   resolve: {
     alias: [
+      {
+        find: '@',
+        replacement: path.resolve(__dirname, './src'),
+      },
       {
         find: '@pooka/ui/styles.css',
         replacement: path.resolve(__dirname, '../../packages/ui/src/styles.css'),
