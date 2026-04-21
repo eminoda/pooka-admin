@@ -7,5 +7,5 @@ export default defineConfig({
       include: [/\.(vue|ts|tsx|js|jsx|html)$/],
     },
   },
-  presets: presetPooka(),
+  presets: presetPooka({icons: true}),
 });
