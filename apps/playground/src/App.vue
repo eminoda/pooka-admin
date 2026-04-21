@@ -11,6 +11,7 @@ import {
   type RowSelectionState,
   type SortingState,
 } from '@tanstack/vue-table';
+import { pookaRegister, pookaRender, type PookaSchema } from '@pooka/core';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -38,6 +39,47 @@ interface UserRow {
 }
 
 type SortField = 'name' | 'username' | 'status' | 'email' | 'role';
+
+pookaRegister('Button', Button);
+
+const schemaDemo: PookaSchema = [
+  {
+    type: 'Button',
+    props: { variant: 'outline' },
+    onEvent: {
+      click: {
+        actions: [
+          { actionType: 'setValue', name: 'showSecret', value: '${!showSecret}' },
+        ],
+      },
+    },
+    children: [
+      {
+        type: 'span',
+        props: { textContent: 'Toggle Schema Content' },
+      },
+    ],
+  },
+  {
+    type: 'div',
+    visibleOn: 'showSecret === true',
+    props: {
+      class: 'mt-2 rounded-md border border-dashed p-3 text-sm text-muted-foreground',
+    },
+    children: [
+      {
+        type: 'span',
+        props: { textContent: 'visibleOn 生效：这是由 schema 联动显示的内容。' },
+      },
+    ],
+  },
+];
+
+const PookaSchemaDemo = pookaRender(schemaDemo, {
+  data: {
+    showSecret: false,
+  },
+});
 
 const MOCK_ROWS: UserRow[] = [
   {
@@ -302,6 +344,11 @@ onMounted(() => {
 <template>
   <main class="grid gap-4 p-6">
     <h1 class="text-xl font-bold">TanStack Table Playground</h1>
+
+    <section class="rounded-md border p-4">
+      <h2 class="mb-2 text-sm font-semibold">Pooka Schema MVP Demo</h2>
+      <component :is="PookaSchemaDemo" />
+    </section>
 
     <div class="flex flex-wrap items-center gap-2 md:flex-row">
       <Button>
