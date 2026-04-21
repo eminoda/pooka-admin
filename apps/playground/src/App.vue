@@ -11,7 +11,7 @@ import {
   type RowSelectionState,
   type SortingState,
 } from '@tanstack/vue-table';
-import { pookaRegister, pookaRender, type PookaSchema } from '@pooka/core';
+import { pookaRegisterAll, pookaRender, type PookaSchema } from '@pooka/core';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -40,11 +40,19 @@ interface UserRow {
 
 type SortField = 'name' | 'username' | 'status' | 'email' | 'role';
 
-pookaRegister('Button', Button);
+const pookaModules = import.meta.glob('./components/ui/**/*.vue', { eager: true }) as Record<
+  string,
+  Record<string, unknown>
+>;
+
+pookaRegisterAll(pookaModules, {
+  namespace: 'ui',
+  conflict: 'warn',
+});
 
 const schemaDemo: PookaSchema = [
   {
-    type: 'Button',
+    type: 'ui.button',
     props: { variant: 'outline' },
     onEvent: {
       click: {
