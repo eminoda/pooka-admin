@@ -8,16 +8,20 @@ export default defineConfig({
   resolve: {
     alias: [
       {
+        find: '@pooka/ui/preset',
+        replacement: path.resolve(__dirname, '../../packages/ui/src/preset.ts'),
+      },
+      {
+        find: /^@pooka\/ui$/,
+        replacement: path.resolve(__dirname, '../../packages/ui/src/index.ts'),
+      },
+      {
         find: '@',
         replacement: path.resolve(__dirname, './src'),
       },
       {
         find: '@pooka/ui/styles.css',
         replacement: path.resolve(__dirname, '../../packages/ui/src/styles.css'),
-      },
-      {
-        find: '@pooka/ui',
-        replacement: path.resolve(__dirname, '../../packages/ui/src/index.ts'),
       },
       {
         find: '@pooka/core',

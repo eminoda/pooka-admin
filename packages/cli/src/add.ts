@@ -126,6 +126,27 @@ function pickPackageManager(): 'pnpm' | 'npm' {
   return ua.includes('pnpm') ? 'pnpm' : 'npm';
 }
 
+async function ensureDependencies(cwd: string, packages: string[]): Promise<void> {
+  const pkgFile = path.join(cwd, 'package.json');
+  if (!fs.existsSync(pkgFile)) {
+    throw new Error('[pooka] 当前目录缺少 package.json，无法安装 CRUD 依赖');
+  }
+  const pkg = JSON.parse(fs.readFileSync(pkgFile, 'utf8')) as {
+    dependencies?: Record<string, string>;
+    devDependencies?: Record<string, string>;
+  };
+  const missing = packages.filter((item) => !pkg.dependencies?.[item] && !pkg.devDependencies?.[item]);
+  if (missing.length === 0) {
+    return;
+  }
+  const pm = pickPackageManager();
+  if (pm === 'pnpm') {
+    await runCommand('pnpm', ['add', ...missing], cwd);
+    return;
+  }
+  await runCommand('npm', ['install', ...missing], cwd);
+}
+
 async function runShadcnAdd(cwd: string, component: string): Promise<void> {
   const pm = pickPackageManager();
   if (pm === 'pnpm') {
@@ -147,6 +168,101 @@ function addLocalComponent(cwd: string, component: string): void {
   copyDir(sourceDir, targetDir);
 }
 
+function ensureCrudDemoPage(cwd: string): void {
+  const target = path.join(cwd, 'src', 'pooka-crud-demo.ts');
+  if (fs.existsSync(target)) {
+    return;
+  }
+  const content = [
+    "import { computed } from 'vue';",
+    "import { registerCrudUi, useCrud } from '@pooka/core';",
+    "import { QueryForm, QueryTable } from '@pooka/ui';",
+    '',
+    "registerCrudUi({ table: QueryTable, form: QueryForm });",
+    '',
+    'interface UserRow {',
+    '  id: number;',
+    '  name: string;',
+    '  status: number;',
+    '}',
+    '',
+    'export function useCrudDemo() {',
+    '  const crud = useCrud<UserRow, UserRow>({',
+    "    api: '/api/user',",
+    '    columns: [',
+    "      { key: 'id', label: 'ID', type: 'number' },",
+    "      { key: 'name', label: '姓名' },",
+    "      { key: 'status', label: '状态', type: 'select', options: [",
+    "        { label: '启用', value: 1 },",
+    "        { label: '禁用', value: 0 },",
+    '      ] },',
+    '    ],',
+    "    search: ['name', 'status'],",
+    '  });',
+    '',
+    '  return {',
+    '    tableProps: computed(() => ({',
+    '      ...crud.tableProps.value,',
+    "      onPageChange: (page: number) => crud.tableProps.value.onPageChange(page),",
+    "      onPageSizeChange: (pageSize: number) => crud.tableProps.value.onPageSizeChange(pageSize),",
+    "      onKeywordChange: (keyword: string) => crud.tableProps.value.onKeywordChange(keyword),",
+    "      onCreateClick: () => crud.tableProps.value.onCreateClick(),",
+    "      onEditClick: (row: UserRow) => crud.tableProps.value.onEditClick(row),",
+    "      onDeleteClick: (row: UserRow) => crud.tableProps.value.onDeleteClick(row),",
+    '    })),',
+    '    formProps: crud.formProps,',
+    '  };',
+    '}',
+    '',
+  ].join('\n');
+  fs.writeFileSync(target, content, 'utf8');
+}
+
+function ensureCrudDemoVue(cwd: string): void {
+  const target = path.join(cwd, 'src', 'CrudPage.vue');
+  if (fs.existsSync(target)) {
+    return;
+  }
+  const content = [
+    '<script setup lang="ts">',
+    "import { QueryForm, QueryTable } from '@pooka/ui';",
+    "import { useCrudDemo } from './pooka-crud-demo';",
+    '',
+    'const { tableProps, formProps } = useCrudDemo();',
+    '</script>',
+    '',
+    '<template>',
+    '  <main class="p-6">',
+    '    <QueryTable',
+    '      v-bind="tableProps"',
+    '      @page-change="tableProps.onPageChange"',
+    '      @page-size-change="tableProps.onPageSizeChange"',
+    '      @keyword-change="tableProps.onKeywordChange"',
+    '      @create-click="tableProps.onCreateClick"',
+    '      @edit-click="tableProps.onEditClick"',
+    '      @delete-click="tableProps.onDeleteClick"',
+    '    />',
+    '    <QueryForm',
+    '      v-bind="formProps"',
+    '      @close="formProps.onClose"',
+    '      @submit="formProps.onSubmit"',
+    '    />',
+    '  </main>',
+    '</template>',
+    '',
+  ].join('\n');
+  fs.writeFileSync(target, content, 'utf8');
+}
+
+async function addCrud(cwd: string): Promise<void> {
+  await ensureDependencies(cwd, ['@pooka/core', '@pooka/ui', '@tanstack/vue-query', '@tanstack/vue-table']);
+  addLocalComponent(cwd, 'table');
+  addLocalComponent(cwd, 'form');
+  addLocalComponent(cwd, 'crud');
+  ensureCrudDemoPage(cwd);
+  ensureCrudDemoVue(cwd);
+}
+
 export async function addComponent(cwd: string, component: string): Promise<void> {
   const normalized = component.trim().toLowerCase();
   const map = readComponentMap();
@@ -156,6 +272,12 @@ export async function addComponent(cwd: string, component: string): Promise<void
   ensureTsconfigAlias(cwd);
   ensureUnoConfig(cwd);
   ensureShadcnUtils(cwd);
+
+  if (normalized === 'crud') {
+    await addCrud(cwd);
+    console.log('[pooka] add "crud" complete. created src/CrudPage.vue');
+    return;
+  }
 
   if (localSet.has(normalized)) {
     addLocalComponent(cwd, normalized);
