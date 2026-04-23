@@ -1,5 +1,29 @@
 import type { CrudApi, CrudListParams, CrudListResult } from './types.js';
 
+interface ApiEnvelope<TData = unknown> {
+  code: number;
+  data: TData;
+  msg?: string;
+}
+
+function isApiEnvelope(input: unknown): input is ApiEnvelope {
+  if (!input || typeof input !== 'object') {
+    return false;
+  }
+  const payload = input as Record<string, unknown>;
+  return typeof payload.code === 'number' && 'data' in payload;
+}
+
+function unwrapApiEnvelope<TData = unknown>(input: unknown): TData {
+  if (!isApiEnvelope(input)) {
+    return input as TData;
+  }
+  if (input.code !== 0) {
+    throw new Error(input.msg ?? `[pooka] request failed with code ${input.code}`);
+  }
+  return input.data as TData;
+}
+
 function normalizeListResult<TItem>(input: unknown): CrudListResult<TItem> {
   if (!input || typeof input !== 'object') {
     return { list: [], total: 0 };
@@ -33,26 +57,32 @@ export function createCrudApi<TItem = Record<string, unknown>, TForm = Record<st
     async list(params) {
       const res = await fetch(`${api}${toQueryString(params)}`);
       const json = (await res.json()) as unknown;
-      return normalizeListResult<TItem>(json);
+      return normalizeListResult<TItem>(unwrapApiEnvelope(json));
     },
     async create(data) {
-      await fetch(api, {
+      const res = await fetch(api, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       });
+      const json = (await res.json()) as unknown;
+      unwrapApiEnvelope(json);
     },
     async update(id, data) {
-      await fetch(`${api}/${id}`, {
+      const res = await fetch(`${api}/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       });
+      const json = (await res.json()) as unknown;
+      unwrapApiEnvelope(json);
     },
     async delete(id) {
-      await fetch(`${api}/${id}`, {
+      const res = await fetch(`${api}/${id}`, {
         method: 'DELETE',
       });
+      const json = (await res.json()) as unknown;
+      unwrapApiEnvelope(json);
     },
   };
 }

@@ -87,6 +87,24 @@ function ensureShadcnUtils(cwd: string): void {
   fs.writeFileSync(target, content, 'utf8');
 }
 
+function ensureUiIndex(cwd: string): void {
+  const target = path.join(cwd, 'src', 'components', 'ui', 'index.ts');
+  if (fs.existsSync(target)) {
+    return;
+  }
+  fs.mkdirSync(path.dirname(target), { recursive: true });
+  const content = [
+    "export { Button } from './button';",
+    "export { Drawer } from './drawer';",
+    "export { Form } from './form';",
+    "export { Input } from './input';",
+    "export { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from './select';",
+    "export { Table } from './table';",
+    '',
+  ].join('\n');
+  fs.writeFileSync(target, content, 'utf8');
+}
+
 function copyDir(sourceDir: string, targetDir: string): void {
   fs.mkdirSync(targetDir, { recursive: true });
 
@@ -157,6 +175,12 @@ async function runShadcnAdd(cwd: string, component: string): Promise<void> {
   await runCommand('npx', ['shadcn-vue@latest', 'add', component, '--yes'], cwd);
 }
 
+async function ensureShadcnComponents(cwd: string, components: string[]): Promise<void> {
+  for (const component of components) {
+    await runShadcnAdd(cwd, component);
+  }
+}
+
 function addLocalComponent(cwd: string, component: string): void {
   const sourceDir = resolveUiPath('src', 'components', 'ui', component);
   const targetDir = path.join(cwd, 'src', 'components', 'ui', component);
@@ -174,11 +198,23 @@ function ensureCrudDemoPage(cwd: string): void {
     return;
   }
   const content = [
-    "import { computed } from 'vue';",
-    "import { registerCrudUi, useCrud } from '@pooka/core';",
-    "import { QueryForm, QueryTable } from '@pooka/ui';",
+    "import { registerPookaComponent, type UseCrudOptions } from '@pooka/core';",
+    "import { Button, Drawer, Form, Input, Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue, Table } from '@/components/ui';",
     '',
-    "registerCrudUi({ table: QueryTable, form: QueryForm });",
+    'registerPookaComponent({',
+    '  Button,',
+    '  Drawer,',
+    '  Form,',
+    '  Input,',
+    '  Select,',
+    '  SelectContent,',
+    '  SelectGroup,',
+    '  SelectItem,',
+    '  SelectLabel,',
+    '  SelectTrigger,',
+    '  SelectValue,',
+    '  Table,',
+    '});',
     '',
     'interface UserRow {',
     '  id: number;',
@@ -186,8 +222,7 @@ function ensureCrudDemoPage(cwd: string): void {
     '  status: number;',
     '}',
     '',
-    'export function useCrudDemo() {',
-    '  const crud = useCrud<UserRow, UserRow>({',
+    'export const crudOptions: UseCrudOptions<UserRow, UserRow> = {',
     "    api: '/api/user',",
     '    columns: [',
     "      { key: 'id', label: 'ID', type: 'number' },",
@@ -198,21 +233,7 @@ function ensureCrudDemoPage(cwd: string): void {
     '      ] },',
     '    ],',
     "    search: ['name', 'status'],",
-    '  });',
-    '',
-    '  return {',
-    '    tableProps: computed(() => ({',
-    '      ...crud.tableProps.value,',
-    "      onPageChange: (page: number) => crud.tableProps.value.onPageChange(page),",
-    "      onPageSizeChange: (pageSize: number) => crud.tableProps.value.onPageSizeChange(pageSize),",
-    "      onKeywordChange: (keyword: string) => crud.tableProps.value.onKeywordChange(keyword),",
-    "      onCreateClick: () => crud.tableProps.value.onCreateClick(),",
-    "      onEditClick: (row: UserRow) => crud.tableProps.value.onEditClick(row),",
-    "      onDeleteClick: (row: UserRow) => crud.tableProps.value.onDeleteClick(row),",
-    '    })),',
-    '    formProps: crud.formProps,',
-    '  };',
-    '}',
+    '};',
     '',
   ].join('\n');
   fs.writeFileSync(target, content, 'utf8');
@@ -225,28 +246,14 @@ function ensureCrudDemoVue(cwd: string): void {
   }
   const content = [
     '<script setup lang="ts">',
-    "import { QueryForm, QueryTable } from '@pooka/ui';",
-    "import { useCrudDemo } from './pooka-crud-demo';",
+    "import { Crud } from '@pooka/ui';",
+    "import { crudOptions } from './pooka-crud-demo';",
     '',
-    'const { tableProps, formProps } = useCrudDemo();',
     '</script>',
     '',
     '<template>',
     '  <main class="p-6">',
-    '    <QueryTable',
-    '      v-bind="tableProps"',
-    '      @page-change="tableProps.onPageChange"',
-    '      @page-size-change="tableProps.onPageSizeChange"',
-    '      @keyword-change="tableProps.onKeywordChange"',
-    '      @create-click="tableProps.onCreateClick"',
-    '      @edit-click="tableProps.onEditClick"',
-    '      @delete-click="tableProps.onDeleteClick"',
-    '    />',
-    '    <QueryForm',
-    '      v-bind="formProps"',
-    '      @close="formProps.onClose"',
-    '      @submit="formProps.onSubmit"',
-    '    />',
+    '    <Crud :options="crudOptions" />',
     '  </main>',
     '</template>',
     '',
@@ -255,7 +262,9 @@ function ensureCrudDemoVue(cwd: string): void {
 }
 
 async function addCrud(cwd: string): Promise<void> {
-  await ensureDependencies(cwd, ['@pooka/core', '@pooka/ui', '@tanstack/vue-query', '@tanstack/vue-table']);
+  await ensureDependencies(cwd, ['@pooka/core', '@pooka/ui', '@tanstack/vue-query', '@tanstack/vue-table', '@tanstack/vue-form']);
+  await ensureShadcnComponents(cwd, ['table', 'drawer', 'dialog', 'form', 'input', 'select', 'button', 'checkbox']);
+  ensureUiIndex(cwd);
   addLocalComponent(cwd, 'table');
   addLocalComponent(cwd, 'form');
   addLocalComponent(cwd, 'crud');

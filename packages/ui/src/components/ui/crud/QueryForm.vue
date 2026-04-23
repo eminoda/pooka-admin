@@ -48,7 +48,7 @@ function submit(): void {
             v-model="localModel[field.key]"
             class="h-9 rounded-md border px-3 text-sm"
           >
-            <option v-for="option in field.options ?? []" :key="option.value" :value="option.value">
+            <option v-for="option in field.options ?? []" :key="String(option.value)" :value="option.value">
               {{ option.label }}
             </option>
           </select>

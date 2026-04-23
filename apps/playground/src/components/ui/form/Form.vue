@@ -1,34 +1,34 @@
 <script setup lang="ts">
-import { reactive } from 'vue';
+import type { PrimitiveProps } from "reka-ui"
+import type { HTMLAttributes } from "vue"
+import { Primitive } from "reka-ui"
+import { cn } from "@/lib/utils"
+
+interface Props extends PrimitiveProps {
+  class?: HTMLAttributes["class"]
+}
 
 const emit = defineEmits<{
-  submit: [payload: { name: string; email: string }];
-}>();
+  (e: "submit", payload: SubmitEvent): void
+}>()
 
-const model = reactive({
-  name: '',
-  email: '',
-});
+const props = withDefaults(defineProps<Props>(), {
+  as: "form",
+})
 
-function onSubmit() {
-  emit('submit', { ...model });
+function onSubmit(event: Event) {
+  emit("submit", event as SubmitEvent)
 }
 </script>
 
 <template>
-  <form class="grid gap-4 rounded-md border p-4" @submit.prevent="onSubmit">
-    <label class="grid gap-1.5">
-      <span class="text-sm font-medium">Name</span>
-      <input v-model="model.name" class="h-9 rounded-md border px-3" type="text" />
-    </label>
-
-    <label class="grid gap-1.5">
-      <span class="text-sm font-medium">Email</span>
-      <input v-model="model.email" class="h-9 rounded-md border px-3" type="email" />
-    </label>
-
-    <button class="inline-flex h-9 items-center justify-center rounded-md border px-3 text-sm font-medium" type="submit">
-      Submit
-    </button>
-  </form>
+  <Primitive
+    data-slot="form"
+    :as="as"
+    :as-child="asChild"
+    :class="cn('grid gap-3', props.class)"
+    @submit="onSubmit"
+  >
+    <slot />
+  </Primitive>
 </template>

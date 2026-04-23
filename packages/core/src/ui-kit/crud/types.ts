@@ -22,21 +22,24 @@ export interface CrudApi<TItem = Record<string, unknown>, TForm = Record<string,
 export interface CrudColumn {
   key: string;
   label: string;
-  type?: 'text' | 'select' | 'date' | 'number';
-  options?: Array<{ label: string; value: string | number }>;
+  type?: 'text' | 'select' | 'date' | 'number' | 'switch';
+  options?: Array<{ label: string; value: string | number | boolean }>;
   formatter?: (value: unknown, row: Record<string, unknown>) => string;
 }
 
 export interface CrudSearchField {
   key: string;
-  component?: 'input' | 'select';
+  label?: string;
+  component?: 'input' | 'select' | 'switch' | 'checkbox' | 'radio';
+  options?: Array<{ label: string; value: string | number | boolean }>;
 }
 
 export interface CrudFormField {
   key: string;
-  component?: 'input' | 'select' | 'textarea';
+  component?: 'input' | 'select' | 'textarea' | 'switch';
+  label?: string;
   required?: boolean;
-  options?: Array<{ label: string; value: string | number }>;
+  options?: Array<{ label: string; value: string | number | boolean }>;
 }
 
 export interface CrudHooks<TItem = Record<string, unknown>> {
@@ -75,12 +78,13 @@ export interface CrudQueryTableProps<TItem = Record<string, unknown>> {
   page: number;
   pageSize: number;
   total: number;
-  keyword: string;
+  filters: Record<string, unknown>;
   searchFields: CrudSearchField[];
   actions: CrudActionConfig;
   onPageChange: (page: number) => void;
   onPageSizeChange: (pageSize: number) => void;
-  onKeywordChange: (keyword: string) => void;
+  onFiltersChange: (filters: Record<string, unknown>) => void;
+  onResetFilters: () => void;
   onCreateClick: () => void;
   onEditClick: (row: TItem) => void;
   onDeleteClick: (row: TItem) => void;
@@ -97,10 +101,18 @@ export interface CrudQueryFormProps<TForm = Record<string, unknown>> {
 }
 
 export interface CrudUiRegistry {
-  table: Component;
-  form: Component;
+  crud?: Component;
+  table?: Component;
+  form?: Component;
+  drawer?: Component;
+  input?: Component;
+  select?: Component;
+  crudType?: string;
   tableType?: string;
   formType?: string;
+  drawerType?: string;
+  inputType?: string;
+  selectType?: string;
 }
 
 export interface UseCrudOptions<TItem = Record<string, unknown>, TForm = Record<string, unknown>> {

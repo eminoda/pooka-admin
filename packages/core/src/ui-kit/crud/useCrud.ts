@@ -28,21 +28,25 @@ export function useCrud<TItem extends Record<string, unknown>, TForm extends Rec
   const resolvedApi = createCrudApi<TItem, TForm>(options.api);
   const filters = reactive<Record<string, unknown>>({});
 
+  function normalizeFilters(source: Record<string, unknown>): Record<string, unknown> {
+    return Object.fromEntries(
+      Object.entries(source).filter(([, value]) => value !== '' && value !== undefined && value !== null),
+    );
+  }
+
   const listQuery = useQuery({
     queryKey: computed(() => [
       'pooka-crud',
       options.api,
       tableState.page.value,
       tableState.pageSize.value,
-      tableState.keyword.value,
-      { ...filters },
+      normalizeFilters(filters),
     ]),
     queryFn: async () => {
       const params = {
         page: tableState.page.value,
         pageSize: tableState.pageSize.value,
-        keyword: tableState.keyword.value,
-        ...filters,
+        ...normalizeFilters(filters),
       };
       const requestParams = options.hooks?.beforeFetch ? options.hooks.beforeFetch(params) : params;
       const payload = await resolvedApi.list(requestParams);
@@ -109,6 +113,18 @@ export function useCrud<TItem extends Record<string, unknown>, TForm extends Rec
     await refresh();
   }
 
+  function setFilters(next: Record<string, unknown>): void {
+    for (const key of Object.keys(filters)) {
+      delete filters[key];
+    }
+    Object.assign(filters, next);
+    tableState.setPage(1);
+  }
+
+  function resetFilters(): void {
+    setFilters({});
+  }
+
   const tableProps = computed(() => ({
     rows: listQuery.data.value?.list ?? [],
     columns,
@@ -116,12 +132,13 @@ export function useCrud<TItem extends Record<string, unknown>, TForm extends Rec
     page: tableState.page.value,
     pageSize: tableState.pageSize.value,
     total: listQuery.data.value?.total ?? 0,
-    keyword: tableState.keyword.value,
+    filters: { ...filters },
     searchFields,
     actions: options.actions ?? { create: true, edit: true, delete: true },
     onPageChange: tableState.setPage,
     onPageSizeChange: tableState.setPageSize,
-    onKeywordChange: tableState.setKeyword,
+    onFiltersChange: setFilters,
+    onResetFilters: resetFilters,
     onCreateClick: formState.openCreate,
     onEditClick: (row: TItem) => formState.openEdit(row as Record<string, unknown>),
     onDeleteClick: deleteRow,

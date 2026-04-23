@@ -7,8 +7,22 @@ import 'virtual:uno.css';
 
 import '@pooka/ui/styles.css';
 
-const app = createApp(App);
-const queryClient = new QueryClient();
+async function enableMocking(): Promise<void> {
+  if (!import.meta.env.DEV) {
+    return;
+  }
+  const { worker } = await import('./mocks/browser');
+  await worker.start({
+    onUnhandledRequest: 'bypass',
+  });
+}
 
-app.use(VueQueryPlugin, { queryClient });
-app.mount('#app');
+async function bootstrap(): Promise<void> {
+  await enableMocking();
+  const app = createApp(App);
+  const queryClient = new QueryClient();
+  app.use(VueQueryPlugin, { queryClient });
+  app.mount('#app');
+}
+
+void bootstrap();
