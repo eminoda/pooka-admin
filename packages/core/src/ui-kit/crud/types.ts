@@ -17,6 +17,7 @@ export interface CrudApi<TItem = Record<string, unknown>, TForm = Record<string,
   create?: (data: TForm) => Promise<unknown>;
   update?: (id: string | number, data: TForm) => Promise<unknown>;
   delete?: (id: string | number) => Promise<unknown>;
+  batchDelete?: (ids: Array<string | number>) => Promise<unknown>;
 }
 
 export interface CrudColumn {
@@ -54,6 +55,15 @@ export interface CrudActionConfig {
   delete?: boolean | { label?: string; confirm?: string };
 }
 
+export interface CrudRowSelectionConfig<TItem = Record<string, unknown>> {
+  enabled?: boolean;
+  mode?: 'single' | 'multiple';
+  preserveSelectedRowKeys?: boolean;
+  disableRowWhen?: (row: TItem) => boolean;
+  selectedRowKeys?: Array<string | number>;
+  onSelectedRowKeysChange?: (keys: Array<string | number>, rows: TItem[]) => void;
+}
+
 export interface CrudState<TItem = Record<string, unknown>, TForm = Record<string, unknown>> {
   page: number;
   pageSize: number;
@@ -81,6 +91,7 @@ export interface CrudQueryTableProps<TItem = Record<string, unknown>> {
   filters: Record<string, unknown>;
   searchFields: CrudSearchField[];
   actions: CrudActionConfig;
+  rowSelection?: CrudRowSelectionConfig<TItem>;
   onPageChange: (page: number) => void;
   onPageSizeChange: (pageSize: number) => void;
   onFiltersChange: (filters: Record<string, unknown>) => void;
@@ -88,6 +99,7 @@ export interface CrudQueryTableProps<TItem = Record<string, unknown>> {
   onCreateClick: () => void;
   onEditClick: (row: TItem) => void;
   onDeleteClick: (row: TItem) => void;
+  onBatchDeleteClick: (keys: Array<string | number>, rows: TItem[]) => Promise<void>;
 }
 
 export interface CrudQueryFormProps<TForm = Record<string, unknown>> {

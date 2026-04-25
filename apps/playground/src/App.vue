@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import { registerPookaComponent, type UseCrudOptions } from '@pooka/core';
 import { Crud } from '@pooka/ui';
 import {
@@ -47,6 +48,8 @@ interface UserRow {
   hobbies: string;
   description: string;
 }
+
+const selectedRowKeys = ref<Array<string | number>>([]);
 
 registerPookaComponent({
   Button,
@@ -143,12 +146,24 @@ const crudOptions: UseCrudOptions<UserRow, UserRow> = {
       { key: 'status', component: 'switch' },
     ],
   },
+  tableProps: {
+    rowSelection: {
+      enabled: true,
+      mode: 'multiple',
+      preserveSelectedRowKeys: true,
+      disableRowWhen: (row: UserRow) => row.status === true,
+      onSelectedRowKeysChange: (keys: Array<string | number>) => {
+        selectedRowKeys.value = keys;
+      },
+    },
+  },
 };
 </script>
 
 <template>
   <main class="mx-auto max-w-5xl p-6">
-    <h1 class="mb-4 text-xl font-semibold">Pooka 增删改查 Example</h1>
+    <h1 class="mb-2 text-xl font-semibold">Pooka 增删改查 Example</h1>
+    <p class="mb-4 text-sm text-muted-foreground">当前选中行 keys：{{ selectedRowKeys.join(', ') || '无' }}</p>
     <Crud :options="crudOptions as any" />
   </main>
 </template>

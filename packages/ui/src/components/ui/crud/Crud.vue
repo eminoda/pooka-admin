@@ -34,6 +34,7 @@ const installHintMap: Record<string, string> = {
   FormItem: 'form',
   Label: 'label',
   Input: 'input',
+  Checkbox: 'checkbox',
   Textarea: 'textarea',
   Switch: 'switch',
   Select: 'select',
@@ -83,6 +84,7 @@ const formComponent = resolveRegisteredComponent('Form', 'form');
 const formItemComponent = resolveRegisteredComponent('FormItem', 'div');
 const labelComponent = resolveRegisteredComponent('Label', 'label');
 const inputComponent = resolveRegisteredComponent('Input', 'input');
+const checkboxComponent = resolveRegisteredComponent('Checkbox', 'input');
 const textareaComponent = resolveRegisteredComponent('Textarea', 'textarea');
 const switchComponent = resolveRegisteredComponent('Switch', 'button');
 const selectComponent = resolveRegisteredComponent('Select', 'select');
@@ -127,6 +129,10 @@ function handleEdit(row: Record<string, unknown>): void {
 function handleDelete(row: Record<string, unknown>): void {
   pendingDeleteRow.value = row;
   deleteDialogOpen.value = true;
+}
+
+async function handleBatchDelete(keys: Array<string | number>, rows: Record<string, unknown>[]): Promise<void> {
+  await tableProps.value.onBatchDeleteClick(keys, rows);
 }
 
 async function confirmDelete(): Promise<void> {
@@ -184,13 +190,15 @@ async function handleEditSubmit(payload: Record<string, unknown>): Promise<void>
       :columns="tableProps.columns"
       :loading="tableProps.loading"
       :actions="tableProps.actions"
+      :row-selection="tableProps.rowSelection"
       :table-component="tableComponent"
       :button-component="buttonComponent"
+      :checkbox-component="checkboxComponent"
       :switch-component="switchComponent"
       @create-click="handleCreate"
-      @refresh-click="crud.refresh"
       @edit-click="handleEdit"
       @delete-click="handleDelete"
+      @batch-delete-click="handleBatchDelete"
     />
 
     <Pagination

@@ -113,6 +113,19 @@ export function useCrud<TItem extends Record<string, unknown>, TForm extends Rec
     await refresh();
   }
 
+  async function batchDeleteRows(keys: Array<string | number>, rows: TItem[]): Promise<void> {
+    if (keys.length === 0) {
+      return;
+    }
+    if (resolvedApi.batchDelete) {
+      await resolvedApi.batchDelete(keys);
+      await refresh();
+      return;
+    }
+    await Promise.all(rows.map((row) => deleteMutation.mutateAsync(row)));
+    await refresh();
+  }
+
   function setFilters(next: Record<string, unknown>): void {
     for (const key of Object.keys(filters)) {
       delete filters[key];
@@ -142,6 +155,7 @@ export function useCrud<TItem extends Record<string, unknown>, TForm extends Rec
     onCreateClick: formState.openCreate,
     onEditClick: (row: TItem) => formState.openEdit(row as Record<string, unknown>),
     onDeleteClick: deleteRow,
+    onBatchDeleteClick: batchDeleteRows,
     ...(options.tableProps ?? {}),
   }));
 

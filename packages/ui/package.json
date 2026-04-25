@@ -40,11 +40,13 @@
     "unocss-preset-shadcn": "^1.0.1"
   },
   "peerDependencies": {
+    "@tanstack/vue-table": "^8.21.3",
     "@pooka/core": "workspace:*",
     "vue": "^3.5.0"
   },
   "devDependencies": {
     "@pooka/core": "workspace:*",
+    "@tanstack/vue-table": "^8.21.3",
     "eslint": "^9.23.0",
     "typescript": "^5.8.2",
     "vue": "^3.5.13"
