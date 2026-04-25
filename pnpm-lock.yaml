@@ -205,9 +205,6 @@ importers:
       '@iconify-json/ant-design':
         specifier: ^1.2.5
         version: 1.2.5
-      '@tanstack/vue-table':
-        specifier: ^8.21.3
-        version: 8.21.3(vue@3.5.33(typescript@5.9.3))
       '@unocss/preset-icons':
         specifier: 66.5.4
         version: 66.5.4
@@ -220,6 +217,12 @@ importers:
       unocss-preset-animations:
         specifier: ^1.3.0
         version: 1.3.0(@unocss/preset-wind3@66.6.8)(unocss@66.5.4(postcss@8.5.10)(vite@6.4.2(@types/node@22.19.17)(jiti@2.6.1)))
+      unocss-preset-antd:
+        specifier: ^0.0.1
+        version: 0.0.1(@unocss/core@66.6.8)(unocss@66.5.4(postcss@8.5.10)(vite@6.4.2(@types/node@22.19.17)(jiti@2.6.1)))
+      unocss-preset-element-plus:
+        specifier: ^0.2.2
+        version: 0.2.2(unocss-preset-theme@0.9.3(@unocss/core@66.6.8))(unocss@66.5.4(postcss@8.5.10)(vite@6.4.2(@types/node@22.19.17)(jiti@2.6.1)))
       unocss-preset-shadcn:
         specifier: ^1.0.1
         version: 1.0.1(unocss-preset-animations@1.3.0(@unocss/preset-wind3@66.6.8)(unocss@66.5.4(postcss@8.5.10)(vite@6.4.2(@types/node@22.19.17)(jiti@2.6.1))))(unocss@66.5.4(postcss@8.5.10)(vite@6.4.2(@types/node@22.19.17)(jiti@2.6.1)))
@@ -227,6 +230,9 @@ importers:
       '@pooka/core':
         specifier: workspace:*
         version: link:../core
+      '@tanstack/vue-table':
+        specifier: ^8.21.3
+        version: 8.21.3(vue@3.5.33(typescript@5.9.3))
       eslint:
         specifier: ^9.23.0
         version: 9.39.4(jiti@2.6.1)
@@ -238,6 +244,13 @@ importers:
         version: 3.5.33(typescript@5.9.3)
 
 packages:
+
+  '@ant-design/colors@7.2.1':
+    resolution: {integrity: sha512-lCHDcEzieu4GA3n8ELeZ5VQ8pKQAWcGGLRTQ50aQM2iqPpq2evTxER84jfdPvsPAtEcZ7m44NI45edFMo8oOYQ==}
+
+  '@ant-design/fast-color@2.0.6':
+    resolution: {integrity: sha512-y2217gk4NqL35giHl72o6Zzqji9O7vHh9YmhUVkPtAOpoTCH4uWxo/pr4VE8t0+ChEPs0qo4eJRC5Q1eXWo3vA==}
+    engines: {node: '>=8.x'}
 
   '@antfu/install-pkg@1.1.0':
     resolution: {integrity: sha512-MGQsmw10ZyI+EJo45CdSER4zEb+p31LpDAFp2Z3gkSd1yqVZGi0Ebx++YTEMonJy4oChEMLsxZ64j8FH6sSqtQ==}
@@ -268,6 +281,10 @@ packages:
     engines: {node: '>=6.0.0'}
     hasBin: true
 
+  '@babel/runtime@7.29.2':
+    resolution: {integrity: sha512-JiDShH45zKHWyGe4ZNVRrCjBz8Nh9TMmZG1kh4QTK8hCBTWBi8Da+i7s1fJw7/lYpM4ccepSNfqzZ/QvABBi5g==}
+    engines: {node: '>=6.9.0'}
+
   '@babel/template@7.28.6':
     resolution: {integrity: sha512-YA6Ma2KsCdGb+WC6UpBVFJGXL58MDA6oyONbjyF/+5sBgxY/dwkhLogbMT2GXXyU84/IhRw/2D1Os1B/giz+BQ==}
     engines: {node: '>=6.9.0'}
@@ -279,6 +296,10 @@ packages:
   '@babel/types@7.29.0':
     resolution: {integrity: sha512-LwdZHpScM4Qz8Xw2iKSzS+cfglZzJGvofQICy7W7v4caru4EaAmyUuO6BGrbyQ2mYV11W0U8j5mBhd14dd3B0A==}
     engines: {node: '>=6.9.0'}
+
+  '@ctrl/tinycolor@4.2.0':
+    resolution: {integrity: sha512-kzyuwOAQnXJNLS9PSyrk0CWk35nWJW/zl/6KvnTBMFK65gm7U1/Z5BqjxeapjZCIhQcM/DsrEmcbRwDyXyXK4A==}
+    engines: {node: '>=14'}
 
   '@esbuild/aix-ppc64@0.25.12':
     resolution: {integrity: sha512-Hhmwd6CInZ3dwpuGTF8fJG6yoWmsToE+vYgD4nytZVxcu1ulHpUQRAB1UJ8+N1Am3Mz4+xOByoQoSZf4D+CpkA==}
@@ -886,11 +907,17 @@ packages:
     resolution: {integrity: sha512-TYwkUw9nZlLTBGCndsyrcHCJ7M+sEsJiK77Edggmd6B3urjkVc1cDjKF3k3tjg4ghQteGsc2akhzn1a4TouybQ==}
     engines: {node: '>=14'}
 
+  '@unocss/core@0.55.7':
+    resolution: {integrity: sha512-c+bWe844Xjlwc1EPwHj0+n3LpntJG7ELPbEOOxNIG+CQdcEX0l1G0rkM8+nKstJ9WJmgpf1HdJQLVMF62HXvhw==}
+
   '@unocss/core@66.5.4':
     resolution: {integrity: sha512-UDS2CRgyQCEFH+5kStDyJd7OFtgkIUZYn5Ahr5z7v3jc/pEfeOJ0mxsNAr+FgMS/xb17vy4sVFvx3jj/FwMZ1A==}
 
   '@unocss/core@66.6.8':
     resolution: {integrity: sha512-P9IlQfgms+8/nka7fBhiiWU4SPwrTNKbTdK0z1SLnttXMHHjsB2zpG+Vi1JQDpICfY9Y1/2pWtguPE+zeOVu9Q==}
+
+  '@unocss/extractor-arbitrary-variants@0.55.7':
+    resolution: {integrity: sha512-imK2g/frlo5Ag0uVB+C/Psyo5+9AnqhoRAgYa6gyrQ/TJnrnwf+M3jFngU9evIMHw92vig1DGfPa2ZId901DwQ==}
 
   '@unocss/extractor-arbitrary-variants@66.5.4':
     resolution: {integrity: sha512-JsgITF11Z2WdXzF8eO2/qkcFIff/dEEc9C2eKYOSUv5pe+RMZxXHoAw4x+D4n0UrGAbHpoUVaJ8E7kG0ayTbGw==}
@@ -912,6 +939,9 @@ packages:
 
   '@unocss/preset-icons@66.5.4':
     resolution: {integrity: sha512-wPR2j191mw89hstQflQvsACzu+3QkueV9lHH8as94By9PKfswWnVZ1nPqJBc3Yl5v8fHEAR1YY4i7egN7TEjIA==}
+
+  '@unocss/preset-mini@0.55.7':
+    resolution: {integrity: sha512-ZCskE2uprjGkpQezEPM6KPMf84rIZEUNc1p2DxWVHaFUPRV24/JSNsO4PsKrQgNIb2dLQxzPNlMzQJI7ssdBXQ==}
 
   '@unocss/preset-mini@66.5.4':
     resolution: {integrity: sha512-KaBGsw3+Pi5ZTsp5u0OrUUUXFVltHin02cYhv3A4b9392Kej5R3y7zIf1VjiQ3ZXR4KZWfv0CQj0LBqIqAJ5WA==}
@@ -1859,11 +1889,29 @@ packages:
       '@unocss/preset-wind3':
         optional: true
 
+  unocss-preset-antd@0.0.1:
+    resolution: {integrity: sha512-Ge8OAG5v6yZrOKPy0tE6NqIoa2nDEWE9uVl1V0pdl3ZfjsGTvkESjYxHJKuMtIngxUFAU0hcHKAC21S72a065Q==}
+    peerDependencies:
+      unocss: '>=0.52'
+
+  unocss-preset-element-plus@0.2.2:
+    resolution: {integrity: sha512-98XmeDQVs5Noat0UmtoGJmqWsIX9jurzQAm0BTRHt5WPSY2laJHFMS8lAyiqh+i7mnA21oXHsouVKgzMm+v0MA==}
+    engines: {node: '>=14.18'}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+    peerDependencies:
+      unocss: '>=0.52'
+      unocss-preset-theme: '>=0.9'
+
   unocss-preset-shadcn@1.0.1:
     resolution: {integrity: sha512-/I39ZO2ntPyRHz+VA8pa+E/empR4sJU//zMjgI0ph5c5LttRs84gcm74pz/wO+sfqMjjN4SbSScD2n+TfE4FHw==}
     peerDependencies:
       unocss: '>=0.56.0 < 101'
       unocss-preset-animations: ^1.1.1
+
+  unocss-preset-theme@0.9.3:
+    resolution: {integrity: sha512-pNu3YmSd47avFH+9lOKN4xHvrxHBQ+5dcC0XKNa2AHpOu/HtCCAGk8v1sdrkcENcPKciSyf6zULEG8N3c2Ilhw==}
+    peerDependencies:
+      '@unocss/core': '>= 0.52.0'
 
   unocss@66.5.4:
     resolution: {integrity: sha512-yNajR8ADgvOzLhDkMKAXVE/SHM4sDrtVhhCnhBjiUMOR0LHIYO7cqunJJudbccrsfJbRTn/odSTBGu9f2IaXOg==}
@@ -2016,6 +2064,14 @@ packages:
 
 snapshots:
 
+  '@ant-design/colors@7.2.1':
+    dependencies:
+      '@ant-design/fast-color': 2.0.6
+
+  '@ant-design/fast-color@2.0.6':
+    dependencies:
+      '@babel/runtime': 7.29.2
+
   '@antfu/install-pkg@1.1.0':
     dependencies:
       package-manager-detector: 1.6.0
@@ -2047,6 +2103,8 @@ snapshots:
     dependencies:
       '@babel/types': 7.29.0
 
+  '@babel/runtime@7.29.2': {}
+
   '@babel/template@7.28.6':
     dependencies:
       '@babel/code-frame': 7.29.0
@@ -2069,6 +2127,8 @@ snapshots:
     dependencies:
       '@babel/helper-string-parser': 7.27.1
       '@babel/helper-validator-identifier': 7.28.5
+
+  '@ctrl/tinycolor@4.2.0': {}
 
   '@esbuild/aix-ppc64@0.25.12':
     optional: true
@@ -2587,9 +2647,15 @@ snapshots:
       '@unocss/core': 66.5.4
       unconfig: 7.5.0
 
+  '@unocss/core@0.55.7': {}
+
   '@unocss/core@66.5.4': {}
 
   '@unocss/core@66.6.8': {}
+
+  '@unocss/extractor-arbitrary-variants@0.55.7':
+    dependencies:
+      '@unocss/core': 0.55.7
 
   '@unocss/extractor-arbitrary-variants@66.5.4':
     dependencies:
@@ -2627,6 +2693,11 @@ snapshots:
       '@iconify/utils': 3.1.0
       '@unocss/core': 66.5.4
       ofetch: 1.5.1
+
+  '@unocss/preset-mini@0.55.7':
+    dependencies:
+      '@unocss/core': 0.55.7
+      '@unocss/extractor-arbitrary-variants': 0.55.7
 
   '@unocss/preset-mini@66.5.4':
     dependencies:
@@ -3653,10 +3724,29 @@ snapshots:
     optionalDependencies:
       '@unocss/preset-wind3': 66.6.8
 
+  unocss-preset-antd@0.0.1(@unocss/core@66.6.8)(unocss@66.5.4(postcss@8.5.10)(vite@6.4.2(@types/node@22.19.17)(jiti@2.6.1))):
+    dependencies:
+      '@ant-design/colors': 7.2.1
+      unocss: 66.5.4(postcss@8.5.10)(vite@6.4.2(@types/node@22.19.17)(jiti@2.6.1))
+      unocss-preset-theme: 0.9.3(@unocss/core@66.6.8)
+    transitivePeerDependencies:
+      - '@unocss/core'
+
+  unocss-preset-element-plus@0.2.2(unocss-preset-theme@0.9.3(@unocss/core@66.6.8))(unocss@66.5.4(postcss@8.5.10)(vite@6.4.2(@types/node@22.19.17)(jiti@2.6.1))):
+    dependencies:
+      '@ctrl/tinycolor': 4.2.0
+      unocss: 66.5.4(postcss@8.5.10)(vite@6.4.2(@types/node@22.19.17)(jiti@2.6.1))
+      unocss-preset-theme: 0.9.3(@unocss/core@66.6.8)
+
   unocss-preset-shadcn@1.0.1(unocss-preset-animations@1.3.0(@unocss/preset-wind3@66.6.8)(unocss@66.5.4(postcss@8.5.10)(vite@6.4.2(@types/node@22.19.17)(jiti@2.6.1))))(unocss@66.5.4(postcss@8.5.10)(vite@6.4.2(@types/node@22.19.17)(jiti@2.6.1))):
     dependencies:
       unocss: 66.5.4(postcss@8.5.10)(vite@6.4.2(@types/node@22.19.17)(jiti@2.6.1))
       unocss-preset-animations: 1.3.0(@unocss/preset-wind3@66.6.8)(unocss@66.5.4(postcss@8.5.10)(vite@6.4.2(@types/node@22.19.17)(jiti@2.6.1)))
+
+  unocss-preset-theme@0.9.3(@unocss/core@66.6.8):
+    dependencies:
+      '@unocss/core': 66.6.8
+      '@unocss/preset-mini': 0.55.7
 
   unocss@66.5.4(postcss@8.5.10)(vite@6.4.2(@types/node@22.19.17)(jiti@2.6.1)):
     dependencies:

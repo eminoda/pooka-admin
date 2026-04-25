@@ -37,11 +37,13 @@
     "@unocss/preset-wind4": "66.5.4",
     "unocss": "66.5.4",
     "unocss-preset-animations": "^1.3.0",
+    "unocss-preset-antd": "^0.0.1",
+    "unocss-preset-element-plus": "^0.2.2",
     "unocss-preset-shadcn": "^1.0.1"
   },
   "peerDependencies": {
-    "@tanstack/vue-table": "^8.21.3",
     "@pooka/core": "workspace:*",
+    "@tanstack/vue-table": "^8.21.3",
     "vue": "^3.5.0"
   },
   "devDependencies": {
