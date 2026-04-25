@@ -21,7 +21,7 @@ const props = withDefaults(
   }>(),
   {
     registryTypes: () => ({}),
-    drawerTitle: '详情',
+    drawerTitle: '编辑',
   },
 );
 
@@ -247,6 +247,7 @@ async function handleEditSubmit(payload: Record<string, unknown>): Promise<void>
     <Drawer
       :open="drawerOpen"
       :title="drawerTitle"
+      :button-component="buttonComponent"
       :drawer-component="drawerComponent"
       :drawer-content-component="drawerContentComponent"
       :drawer-header-component="drawerHeaderComponent"
