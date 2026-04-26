@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="docs/logo.png" alt="pooka-admin" width="160" />
+<img src="docs/logo-inner.png" alt="pooka-admin" width="160" />
 
 </div>
 
