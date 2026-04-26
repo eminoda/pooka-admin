@@ -31,18 +31,38 @@ function onSelect(path: string) {
   emit('select', path);
 }
 
+/** 当前路由是否落在该菜单 path 上（含子路径，根路径 `/` 仅精确匹配） */
+function pathMatchesMenu(menuPath: string, activePath: string): boolean {
+  if (activePath === menuPath) {
+    return true;
+  }
+  if (menuPath === '/' || menuPath === '') {
+    return false;
+  }
+  return activePath.startsWith(`${menuPath}/`);
+}
+
 function isActive(menu: PookaLayoutMenuItem): boolean {
-  if (props.activePath === menu.path) {
+  if (pathMatchesMenu(menu.path, props.activePath)) {
     return true;
   }
   return Boolean(menu.children?.some(isActive));
 }
 
+/** 为展示当前路由，需要展开的一级（及未来多级时取链上各级）菜单 path */
 const expandedParentPath = computed(() => {
-  const parent = props.menus.find(
-    (menu) => menu.children?.length && menu.children.some((child) => isActive(child)),
-  );
-  return parent?.path ?? '';
+  for (const menu of props.menus) {
+    if (!menu.children?.length) {
+      continue;
+    }
+    if (pathMatchesMenu(menu.path, props.activePath)) {
+      return menu.path;
+    }
+    if (menu.children.some((child) => isActive(child))) {
+      return menu.path;
+    }
+  }
+  return '';
 });
 
 const manualExpandedParentPath = ref('');
@@ -70,6 +90,27 @@ watch(
     manualExpandedParentPath.value = keys?.[0] ?? '';
   },
   { immediate: true },
+);
+
+/**
+ * 受控 openKeys：仅在「当前路由」或「应展开父级」变化时同步展开（不监听 openKeys 本身，避免无法手动收起）
+ */
+watch(
+  [() => props.activePath, expandedParentPath, isControlled],
+  () => {
+    if (!isControlled.value) {
+      return;
+    }
+    const path = expandedParentPath.value;
+    if (!path) {
+      return;
+    }
+    const current = props.openKeys?.[0] ?? '';
+    if (current !== path) {
+      emit('update:openKeys', [path]);
+    }
+  },
+  { flush: 'post', immediate: true },
 );
 
 function isExpanded(menu: PookaLayoutMenuItem): boolean {
@@ -104,7 +145,7 @@ function menuButtonActiveMode(menu: PookaLayoutMenuItem): 'ancestor' | 'item' {
     return 'item';
   }
   const childActive = menu.children.some(isActive);
-  const selfActive = props.activePath === menu.path;
+  const selfActive = pathMatchesMenu(menu.path, props.activePath);
   if (childActive && !selfActive) {
     return 'ancestor';
   }
@@ -130,7 +171,7 @@ function menuButtonActiveMode(menu: PookaLayoutMenuItem): 'ancestor' | 'item' {
             >
               <span
                 v-if="menu.icon"
-                class="size-4 shrink-0 text-[1rem] leading-none"
+                class="inline-block size-4 shrink-0 align-middle text-[1rem] leading-none text-sidebar-foreground"
                 :class="menu.icon"
                 aria-hidden="true"
               />
@@ -186,7 +227,7 @@ function menuButtonActiveMode(menu: PookaLayoutMenuItem): 'ancestor' | 'item' {
             >
               <span
                 v-if="child.icon"
-                class="size-4 shrink-0 text-[1rem] leading-none"
+                class="inline-block size-4 shrink-0 align-middle text-[1rem] leading-none text-sidebar-foreground"
                 :class="child.icon"
                 aria-hidden="true"
               />

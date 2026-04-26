@@ -17,7 +17,7 @@ const props = withDefaults(
 <template>
   <button
     type="button"
-    class="group/menu-btn relative my-0.5 mx-2 flex h-[38px] w-full items-center gap-2 rounded-lg border-0 bg-transparent text-sm font-normal text-sidebar-foreground/80 outline-none transition-[background,color] duration-150 ease-in-out focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+    class="group/menu-btn relative my-0.5 flex h-[38px] w-full min-w-0 max-w-full items-center gap-2 rounded-lg border-0 bg-transparent text-sm font-normal text-sidebar-foreground/80 outline-none transition-[background,color] duration-150 ease-in-out focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
     data-slot="sidebar-menu-button"
     data-sidebar="menu-button"
     :data-active="props.active ? 'true' : 'false'"

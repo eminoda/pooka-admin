@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { deriveLayoutMenusFromAccessRouter } from '@pooka/core';
 import { getAccessRouter, getLayoutController, initRuntime } from '@/access/access-router';
+import { bumpLayoutMenusRevision } from '@/access/layout-menu-sync';
 import { signInByRole } from '@/access/auth';
 
 const role = ref<'admin' | 'editor' | 'viewer'>('viewer');
@@ -17,6 +18,7 @@ async function submitLogin() {
   accessRouter.reset();
   await accessRouter.ensureLoaded();
   layout.setMenus(deriveLayoutMenusFromAccessRouter(accessRouter));
+  bumpLayoutMenusRevision();
 
   const redirect = typeof route.query.redirect === 'string'
     ? decodeURIComponent(route.query.redirect)

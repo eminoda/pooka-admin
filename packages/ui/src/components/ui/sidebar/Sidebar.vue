@@ -14,7 +14,7 @@ const props = withDefaults(defineProps<SidebarProps>(), {
 
 <template>
   <aside
-    class="relative border-r border-sidebar-border bg-sidebar text-sidebar-foreground transition-[width] duration-200 ease-linear"
+    class="relative min-w-0 overflow-x-hidden border-r border-sidebar-border bg-sidebar text-sidebar-foreground transition-[width] duration-200 ease-linear"
     data-slot="sidebar"
     :data-state="props.collapsed ? 'collapsed' : 'expanded'"
     :style="{ width: `${props.collapsed ? props.collapsedWidth : props.menuWidth}px` }"

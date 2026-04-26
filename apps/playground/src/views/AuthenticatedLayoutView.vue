@@ -5,6 +5,7 @@ import { PookaLayout, PookaLayoutMain, PookaLayoutMenus } from '@pooka/ui';
 import { Button } from '@/components/ui';
 import logoUrl from '@pooka/docs/logo-inner.png?url';
 import { getAccessRouter, getLayoutController, initRuntime } from '@/access/access-router';
+import { layoutMenusRevision } from '@/access/layout-menu-sync';
 import { signOut } from '@/access/auth';
 
 const route = useRoute();
@@ -29,9 +30,9 @@ function onUpdateOpenKeys(keys: string[]) {
 }
 
 const menus = computed(() => {
+  layoutMenusRevision.value;
   void route.path;
-  const layout = getLayoutController();
-  return layout.getState().menus;
+  return getLayoutController().getState().menus;
 });
 
 async function logout() {
