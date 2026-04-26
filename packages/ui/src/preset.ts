@@ -21,27 +21,38 @@ const SHADCN_BUILTIN_COLORS = [
   'violet',
 ] as const;
 type ShadcnBuiltinColor = (typeof SHADCN_BUILTIN_COLORS)[number];
+type PookaTheme = 'antd' | 'element' | 'shadcn';
+
+type PookaPresetInnerOptions = {
+  primary?: ShadcnBuiltinColor | string;
+  icon?: string;
+  presetIcons?: Parameters<typeof presetIcons>[0];
+};
 
 export interface PookaPresetOptions {
-  primary?: ShadcnBuiltinColor | string;
-  antd?: boolean;
-  element?: boolean;
-  icons?: boolean;
+  theme?: PookaTheme;
+  options?: PookaPresetInnerOptions;
 }
 /**
  * Pooka 默认 UnoCSS preset。
  * 当前以 wind4 为基础。
  */
 export function presetPooka(options: PookaPresetOptions = {}): any {
+  const { theme = 'shadcn', options: presetOptions = {} } = options;
   const {
-    antd = false,
-    element = false,
-    icons = true,
-  } = options;
-  const primary = options.primary ?? (antd ? '#1677ff' : element ? '#409eff' : 'green');
+    primary: primaryOption,
+    icon = 'ant-design',
+    presetIcons: presetIconsOptions = {},
+  } = presetOptions;
+
+  const primary = primaryOption ?? (theme === 'antd' ? '#1677ff' : theme === 'element' ? '#409eff' : 'green');
   const shadcnPrimary = SHADCN_BUILTIN_COLORS.includes(primary as ShadcnBuiltinColor)
     ? (primary as ShadcnBuiltinColor)
     : 'green';
+  const iconCollections = {
+    ...(icon === 'ant-design' ? { 'ant-design': () => antDesignIcons as any } : {}),
+    ...(presetIconsOptions.collections ?? {}),
+  };
 
   // https://github.com/unocss-community/unocss-preset-shadcn
   return [
@@ -50,19 +61,17 @@ export function presetPooka(options: PookaPresetOptions = {}): any {
     presetShadcn({
       color: shadcnPrimary,
     }),
-    ...(antd ? [presetAntd({ primary })] : []),
-    ...(element ? [presetElementPlus({
-      primary
-    })] : []),
-    ...(icons
-      ? [
-        presetIcons({
-          scale: 1,
-          collections: {
-            'ant-design': () => antDesignIcons as any,
-          },
-        }),
-      ]
+    ...(theme === 'antd' ? [presetAntd({ primary })] : []),
+    ...(theme === 'element'
+      ? [presetElementPlus({
+      primary,
+      preferCssVariables: false
+    })]
       : []),
+    presetIcons({
+      scale: 1,
+      ...presetIconsOptions,
+      collections: iconCollections,
+    }),
   ];
 }

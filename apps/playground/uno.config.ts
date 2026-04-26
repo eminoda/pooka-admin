@@ -7,5 +7,5 @@ export default defineConfig({
       include: [/\.(vue|ts|tsx|js|jsx|html)$/],
     },
   },
-  presets: presetPooka({ icons: true, antd: true, element: false }),
+  presets: presetPooka({ theme: 'antd' }),
 });
