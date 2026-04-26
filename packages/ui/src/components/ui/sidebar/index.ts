@@ -1,0 +1,11 @@
+export { default as Sidebar } from './Sidebar.vue';
+export { default as SidebarHeader } from './SidebarHeader.vue';
+export { default as SidebarContent } from './SidebarContent.vue';
+export { default as SidebarInset } from './SidebarInset.vue';
+export { default as SidebarTrigger } from './SidebarTrigger.vue';
+export { default as SidebarMenu } from './SidebarMenu.vue';
+export { default as SidebarMenuItem } from './SidebarMenuItem.vue';
+export { default as SidebarMenuButton } from './SidebarMenuButton.vue';
+export { default as SidebarMenuSub } from './SidebarMenuSub.vue';
+export { default as SidebarMenuSubItem } from './SidebarMenuSubItem.vue';
+export { default as SidebarMenuSubButton } from './SidebarMenuSubButton.vue';

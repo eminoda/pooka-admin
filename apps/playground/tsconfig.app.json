@@ -19,8 +19,8 @@
       "@pooka/shared": [
         "../../packages/shared/src/index.ts"
       ],
-      "@pooka/provider": [
-        "../../packages/provider/src/index.ts"
+      "@pooka/docs/*": [
+        "../../docs/*"
       ],
       "@/*": [
         "./src/*"

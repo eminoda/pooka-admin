@@ -14,6 +14,25 @@ interface ApiResponse<TData = unknown> {
   msg: string;
 }
 
+interface AccessRouteMeta {
+  title?: string;
+  icon?: string;
+  order?: number;
+  ignoreAccess?: boolean;
+  hideInMenu?: boolean;
+  requiredRoles?: string[];
+  requiredCodes?: string[];
+  menuVisibleWithForbidden?: boolean;
+}
+
+interface AccessRouteItem {
+  name: string;
+  path: string;
+  component?: string;
+  meta?: AccessRouteMeta;
+  children?: AccessRouteItem[];
+}
+
 const hobbyPool = [
   { value: 'reading', label: '阅读' },
   { value: 'music', label: '音乐' },
@@ -33,6 +52,117 @@ const users: UserRow[] = Array.from({ length: 100 }, (_, index) => {
   };
 });
 
+/** Uno presetIcons：`i-ant-design-*`（需在 uno safelist 中声明以便运行时菜单动态类名生效） */
+const ACCESS_ROUTE_BASE: AccessRouteItem[] = [
+  {
+    name: 'Home',
+    path: '/',
+    component: 'home',
+    meta: {
+      icon: 'i-ant-design-home-outlined',
+      order: 1,
+      title: '首页',
+    },
+  },
+  {
+    name: 'Profile',
+    path: '/profile',
+    component: 'profile',
+    meta: {
+      icon: 'i-ant-design-user-outlined',
+      order: 2,
+      title: '个人中心',
+    },
+  },
+  {
+    name: 'System',
+    path: '/system',
+    meta: {
+      icon: 'i-ant-design-setting-outlined',
+      order: 8,
+      title: '系统管理',
+    },
+    children: [
+      {
+        name: 'SystemUsers',
+        path: '/system/users',
+        component: 'system-users',
+        meta: {
+          icon: 'i-ant-design-team-outlined',
+          order: 1,
+          title: '用户管理',
+        },
+      },
+      {
+        name: 'SystemRoles',
+        path: '/system/roles',
+        component: 'system-roles',
+        meta: {
+          icon: 'i-ant-design-safety-certificate-outlined',
+          order: 2,
+          title: '角色管理',
+        },
+      },
+    ],
+  },
+];
+
+const ACCESS_ROUTES_BY_ROLE: Record<string, AccessRouteItem[]> = {
+  admin: [
+    ...ACCESS_ROUTE_BASE,
+    {
+      name: 'Admin',
+      path: '/admin',
+      component: 'admin',
+      meta: {
+        icon: 'i-ant-design-dashboard-outlined',
+        order: 10,
+        title: '管理台',
+        requiredRoles: ['admin'],
+      },
+    },
+    {
+      name: 'Ops',
+      path: '/ops',
+      component: 'ops',
+      meta: {
+        icon: 'i-ant-design-cloud-server-outlined',
+        order: 11,
+        title: '运维中心',
+        requiredRoles: ['admin'],
+        menuVisibleWithForbidden: true,
+      },
+    },
+  ],
+  editor: [
+    ...ACCESS_ROUTE_BASE,
+    {
+      name: 'Reports',
+      path: '/reports',
+      component: 'reports',
+      meta: {
+        icon: 'i-ant-design-bar-chart-outlined',
+        order: 9,
+        title: '报表中心',
+        requiredCodes: ['report:view'],
+      },
+    },
+    {
+      name: 'Admin',
+      path: '/admin',
+      component: 'admin',
+      meta: {
+        icon: 'i-ant-design-dashboard-outlined',
+        order: 10,
+        title: '管理台',
+        requiredRoles: ['admin'],
+        menuVisibleWithForbidden: true,
+      },
+    },
+  ],
+  viewer: ACCESS_ROUTE_BASE,
+};
+
 function parseQueryNumber(value: string | null, fallback: number): number {
   if (!value) {
     return fallback;
@@ -50,6 +180,12 @@ function fail(msg: string, code = 1): ApiResponse<null> {
 }
 
 export const handlers = [
+  http.get('/api/access-routes', ({ request }) => {
+    const url = new URL(request.url);
+    const role = url.searchParams.get('role') ?? 'viewer';
+    const routes = ACCESS_ROUTES_BY_ROLE[role] ?? ACCESS_ROUTES_BY_ROLE.viewer ?? [];
+    return HttpResponse.json(ok(routes));
+  }),
   http.get('/api/user', ({ request }) => {
     const url = new URL(request.url);
     const name = (url.searchParams.get('name') ?? '').toLowerCase();
