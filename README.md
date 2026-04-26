@@ -7,9 +7,33 @@
 # pooka-admin
 
 > A fully controllable admin toolkit designed for frontend developers.
+
 ## Features
 
 ### UI 自主可控
+
+组件以 **shadcn-vue（copy-paste）** 为基础，样式由 **UnoCSS** 驱动；通过 `@pooka/ui` 的 **`presetPooka`** 选择 **主题 token**，在原子类与语义色之间统一主色与组件观感，无需自己拼多套 CSS 变量。
+
+Playground 示例（[`apps/playground/uno.config.ts`](./apps/playground/uno.config.ts)）：
+
+```ts
+import { defineConfig } from 'unocss';
+import { presetPooka } from '@pooka/ui/preset';
+
+export default defineConfig({
+  presets: presetPooka({ theme: 'antd' }),
+});
+```
+
+**`presetPooka` 的主题 token** 由 `theme` 三选一，含义如下（实现见 [`packages/ui/src/preset.ts`](./packages/ui/src/preset.ts)）。
+
+| `theme` | 作用 |
+| --- | --- |
+| `'antd'` | **Ant Design** 主色体系（默认主色 `#1677ff`），适合希望后台整体贴近 Ant 蓝与相关 token 的项目。 |
+| `'element'` | **Element Plus** 主色体系（默认主色 `#409eff`），适合贴近 Element 蓝与相关 token 的项目。 |
+| `'shadcn'` | **纯 shadcn** 语义色与内置色板（默认主色走 shadcn 内置 `green`），不叠加 Ant/Element 的主色预设。 |
+
+可选 **`options`**：`primary` 覆盖上述默认主色（shadcn 内置色名或 hex）；`icon` / `presetIcons` 控制图标集合（如 Ant Design 图标与 safelist 中的 `i-ant-design-*`）。菜单等 **运行时拼接的图标类名** 仍需在应用 `uno.config` 里 **safelist**，否则 Uno 不会生成对应样式。
 
 ### 开箱即用
 
