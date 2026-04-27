@@ -6,7 +6,7 @@ import {
   useCrud,
   type CrudUiRegistry,
   type UseCrudOptions,
-} from '@pooka/core';
+} from 'pooka-core';
 import Drawer from './Drawer.vue';
 import Form from './Form.vue';
 import Pagination from './Pagination.vue';

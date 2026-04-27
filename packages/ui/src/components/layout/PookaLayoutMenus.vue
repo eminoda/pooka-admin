@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
-import type { PookaLayoutMenuItem } from '@pooka/core';
+import type { PookaLayoutMenuItem } from 'pooka-core';
 import {
   SidebarMenu,
   SidebarMenuButton,

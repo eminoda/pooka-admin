@@ -1,5 +1,5 @@
 {
-  "name": "@pooka/config",
+  "name": "pooka-config",
   "version": "0.0.1-alpha.1",
   "private": false,
   "description": "Shared ESLint, Prettier, TypeScript base, and future UnoCSS / Tailwind presets for Pooka Admin",
@@ -10,7 +10,7 @@
     "./prettier": "./prettier.config.js"
   },
   "scripts": {
-    "build": "node -e \"console.log('@pooka/config: no build output')\"",
+    "build": "node -e \"console.log('pooka-config: no build output')\"",
     "lint": "eslint . --max-warnings 0",
     "type-check": "tsc -p tsconfig.json --noEmit"
   },

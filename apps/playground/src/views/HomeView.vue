@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { registerPookaComponent, type UseCrudOptions } from '@pooka/core';
-import { Crud } from '@pooka/ui';
+import { registerPookaComponent, type UseCrudOptions } from 'pooka-core';
+import { Crud } from 'pooka-ui';
 import {
   AlertDialog,
   AlertDialogAction,

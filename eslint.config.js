@@ -1,4 +1,4 @@
-import pookaEslint from '@pooka/config/eslint';
+import pookaEslint from 'pooka-config/eslint';
 
 export default [
   {

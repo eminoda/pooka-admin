@@ -10,13 +10,13 @@
     "verbatimModuleSyntax": true,
     "baseUrl": ".",
     "paths": {
-      "@pooka/ui": [
+      "pooka-ui": [
         "../../packages/ui/src/index.ts"
       ],
-      "@pooka/core": [
+      "pooka-core": [
         "../../packages/core/src/index.ts"
       ],
-      "@pooka/shared": [
+      "pooka-shared": [
         "../../packages/shared/src/index.ts"
       ],
       "@pooka/docs/*": [

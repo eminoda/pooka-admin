@@ -57,7 +57,7 @@ function ensureUnoConfig(cwd: string): void {
 
   const content = [
     "import { defineConfig } from 'unocss';",
-    "import { presetPooka } from '@pooka/ui/preset';",
+    "import { presetPooka } from 'pooka-ui/preset';",
     '',
     'export default defineConfig({',
     '  presets: [presetPooka()],',
@@ -198,7 +198,7 @@ function ensureCrudDemoPage(cwd: string): void {
     return;
   }
   const content = [
-    "import { registerPookaComponent, type UseCrudOptions } from '@pooka/core';",
+    "import { registerPookaComponent, type UseCrudOptions } from 'pooka-core';",
     "import { Button, Drawer, Form, Input, Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue, Table } from '@/components/ui';",
     '',
     'registerPookaComponent({',
@@ -246,7 +246,7 @@ function ensureCrudDemoVue(cwd: string): void {
   }
   const content = [
     '<script setup lang="ts">',
-    "import { Crud } from '@pooka/ui';",
+    "import { Crud } from 'pooka-ui';",
     "import { crudOptions } from './pooka-crud-demo';",
     '',
     '</script>',
@@ -262,7 +262,7 @@ function ensureCrudDemoVue(cwd: string): void {
 }
 
 async function addCrud(cwd: string): Promise<void> {
-  await ensureDependencies(cwd, ['@pooka/core', '@pooka/ui', '@tanstack/vue-query', '@tanstack/vue-table', '@tanstack/vue-form']);
+  await ensureDependencies(cwd, ['pooka-core', 'pooka-ui', '@tanstack/vue-query', '@tanstack/vue-table', '@tanstack/vue-form']);
   await ensureShadcnComponents(cwd, ['table', 'drawer', 'dialog', 'form', 'input', 'select', 'button', 'checkbox']);
   ensureUiIndex(cwd);
   addLocalComponent(cwd, 'table');
@@ -290,7 +290,7 @@ export async function addComponent(cwd: string, component: string): Promise<void
 
   if (localSet.has(normalized)) {
     addLocalComponent(cwd, normalized);
-    console.log(`[pooka] add "${normalized}" from @pooka/ui local templates`);
+    console.log(`[pooka] add "${normalized}" from pooka-ui local templates`);
     return;
   }
 

@@ -1,1 +1,1 @@
-export { default } from '@pooka/config/prettier';
+export { default } from 'pooka-config/prettier';

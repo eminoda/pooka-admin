@@ -1,5 +1,5 @@
 {
-  "extends": "@pooka/config/tsconfig.base.json",
+  "extends": "pooka-config/tsconfig.base.json",
   "compilerOptions": {
     "composite": true,
     "noEmit": true,

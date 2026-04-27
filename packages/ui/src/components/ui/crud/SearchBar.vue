@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { reactive, watch } from 'vue';
 import type { Component } from 'vue';
-import type { CrudSearchField } from '@pooka/core';
+import type { CrudSearchField } from 'pooka-core';
 
 const props = defineProps<{
   filters: Record<string, unknown>;

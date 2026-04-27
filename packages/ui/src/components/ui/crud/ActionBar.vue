@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Component } from 'vue';
-import type { CrudActionConfig } from '@pooka/core';
+import type { CrudActionConfig } from 'pooka-core';
 
 defineProps<{
   actions: CrudActionConfig;

@@ -12,13 +12,13 @@
 
 ### UI 自主可控
 
-组件以 **shadcn-vue（copy-paste）** 为基础，样式由 **UnoCSS** 驱动；通过 `@pooka/ui` 的 **`presetPooka`** 选择 **主题 token**，在原子类与语义色之间统一主色与组件观感，无需自己拼多套 CSS 变量。
+组件以 **shadcn-vue（copy-paste）** 为基础，样式由 **UnoCSS** 驱动；通过 `pooka-ui` 的 **`presetPooka`** 选择 **主题 token**，在原子类与语义色之间统一主色与组件观感，无需自己拼多套 CSS 变量。
 
 Playground 示例（[`apps/playground/uno.config.ts`](./apps/playground/uno.config.ts)）：
 
 ```ts
 import { defineConfig } from 'unocss';
-import { presetPooka } from '@pooka/ui/preset';
+import { presetPooka } from 'pooka-ui/preset';
 
 export default defineConfig({
   presets: presetPooka({ theme: 'antd' }),
@@ -39,7 +39,7 @@ export default defineConfig({
 
 #### CRUD
 
-内置 `Crud` 增删改查组件，基于 `@pooka/core` + `@pooka/ui`，可通过配置快速组装：
+内置 `Crud` 增删改查组件，基于 `pooka-core` + `pooka-ui`，可通过配置快速组装：
 
 - 表格列配置：`columns`（支持文本、选择、开关等展示）
 - 查询区配置：`search`（input/select/switch）
@@ -70,7 +70,7 @@ Playground 效果图：
 
 ### 动态路由权限（accessRouter）
 
-`@pooka/core` 提供 **accessRouter**：在「登录态 + 角色/权限码」下过滤后端或前端下发的路由，并派生侧边栏菜单；在路由守卫里调用 `guard` 即可完成未登录跳转登录、无权限跳转 403。Playground 演示：`apps/playground/src/access/access-router.ts`、`apps/playground/src/router/index.ts`。
+`pooka-core` 提供 **accessRouter**：在「登录态 + 角色/权限码」下过滤后端或前端下发的路由，并派生侧边栏菜单；在路由守卫里调用 `guard` 即可完成未登录跳转登录、无权限跳转 403。Playground 演示：`apps/playground/src/access/access-router.ts`、`apps/playground/src/router/index.ts`。
 
 **1. 注册运行时与 accessRouter**
 
@@ -83,7 +83,7 @@ import {
   createPookaRuntime,
   type PookaAccessContext,
   type PookaAccessRouteItem,
-} from '@pooka/core';
+} from 'pooka-core';
 
 async function fetchAccessRoutes(ctx: PookaAccessContext): Promise<PookaAccessRouteItem[]> {
   const res = await fetch('/api/access-routes');
@@ -136,7 +136,7 @@ await runtime.init();
 以 **Vue Router** 为例：进入受保护页面前 `init` 运行时，对目标路径传入 **当前路由的 `meta`**，并将 accessRouter 派生的菜单同步给布局：
 
 ```ts
-import { deriveLayoutMenusFromAccessRouter } from '@pooka/core';
+import { deriveLayoutMenusFromAccessRouter } from 'pooka-core';
 
 router.beforeEach(async (to) => {
   await runtime.init();
@@ -181,7 +181,7 @@ pnpm lint
 pnpm type-check
 ```
 
-CLI（需先构建 `@pooka/cli`）：
+CLI（需先构建 `pooka-cli`）：
 
 ```bash
 pnpm build:cli

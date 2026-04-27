@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { reactive, watch } from 'vue';
-import type { CrudFormField } from '@pooka/core';
+import type { CrudFormField } from 'pooka-core';
 
 const props = defineProps<{
   open: boolean;

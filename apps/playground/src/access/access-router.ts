@@ -6,7 +6,7 @@ import {
   type PookaLayoutController,
   type PookaAccessRouter,
   type PookaAccessRouteItem,
-} from '@pooka/core';
+} from 'pooka-core';
 import { getAuthState } from './auth';
 
 async function fetchAccessRoutes(context: PookaAccessContext): Promise<PookaAccessRouteItem[]> {

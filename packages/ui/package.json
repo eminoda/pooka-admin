@@ -1,5 +1,5 @@
 {
-  "name": "@pooka/ui",
+  "name": "pooka-ui",
   "version": "0.0.1-alpha.1",
   "private": false,
   "description": "Pooka base UI — shadcn-vue (vendored) + UnoCSS integration (phase 1: config only)",
@@ -42,12 +42,12 @@
     "unocss-preset-shadcn": "^1.0.1"
   },
   "peerDependencies": {
-    "@pooka/core": "workspace:*",
+    "pooka-core": "workspace:*",
     "@tanstack/vue-table": "^8.21.3",
     "vue": "^3.5.0"
   },
   "devDependencies": {
-    "@pooka/core": "workspace:*",
+    "pooka-core": "workspace:*",
     "@tanstack/vue-table": "^8.21.3",
     "eslint": "^9.23.0",
     "typescript": "^5.8.2",

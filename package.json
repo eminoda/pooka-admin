@@ -9,17 +9,17 @@
     "dev": "turbo dev",
     "dev:playground": "turbo dev --filter=@pooka/playground",
     "build": "turbo build",
-    "build:ui": "turbo build --filter=@pooka/ui",
-    "build:core": "turbo build --filter=@pooka/core",
-    "build:cli": "turbo build --filter=@pooka/cli",
+    "build:ui": "turbo build --filter=pooka-ui",
+    "build:core": "turbo build --filter=pooka-core",
+    "build:cli": "turbo build --filter=pooka-cli",
     "lint": "turbo lint",
     "type-check": "turbo type-check",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "pooka": "pnpm --filter @pooka/cli exec pooka"
+    "pooka": "pnpm --filter pooka-cli exec pooka"
   },
   "devDependencies": {
-    "@pooka/config": "workspace:*",
+    "pooka-config": "workspace:*",
     "eslint": "^9.23.0",
     "prettier": "^3.5.3",
     "turbo": "^2.5.0",

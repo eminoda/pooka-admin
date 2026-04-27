@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { deriveLayoutMenusFromAccessRouter } from '@pooka/core';
+import { deriveLayoutMenusFromAccessRouter } from 'pooka-core';
 import { getAccessRouter, getLayoutController, initRuntime } from '@/access/access-router';
 import { bumpLayoutMenusRevision } from '@/access/layout-menu-sync';
 import { signInByRole } from '@/access/auth';

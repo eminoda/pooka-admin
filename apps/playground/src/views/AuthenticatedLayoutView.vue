@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
 import { RouterView, useRoute, useRouter } from 'vue-router';
-import { PookaLayout, PookaLayoutMain, PookaLayoutMenus } from '@pooka/ui';
+import { PookaLayout, PookaLayoutMain, PookaLayoutMenus } from 'pooka-ui';
 import { Button } from '@/components/ui';
 import logoUrl from '@pooka/docs/logo-inner.png?url';
 import { getAccessRouter, getLayoutController, initRuntime } from '@/access/access-router';

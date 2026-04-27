@@ -7,7 +7,7 @@ import { initRuntime } from './access/access-router';
 import '@unocss/reset/tailwind.css';
 import 'virtual:uno.css';
 
-import '@pooka/ui/styles.css';
+import 'pooka-ui/styles.css';
 
 async function enableMocking(): Promise<void> {
   if (!import.meta.env.DEV) {

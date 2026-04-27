@@ -7,7 +7,7 @@ import vueParser from 'vue-eslint-parser';
 
 /**
  * Shared flat ESLint config for the Pooka Admin monorepo.
- * Apps and packages can `import pookaEslint from '@pooka/config/eslint'` and spread into their config.
+ * Apps and packages can `import pookaEslint from 'pooka-config/eslint'` and spread into their config.
  */
 export default tseslint.config(
   eslint.configs.recommended,

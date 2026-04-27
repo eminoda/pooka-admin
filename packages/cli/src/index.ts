@@ -6,7 +6,7 @@ export function run(argv: string[] = process.argv): void {
   const program = cac('pooka');
 
   program
-    .command('add <component>', '添加组件。table/form 从 @pooka/ui 本地模板拉取，其余走 shadcn-vue。')
+    .command('add <component>', '添加组件。table/form 从 pooka-ui 本地模板拉取，其余走 shadcn-vue。')
     .option('--cwd <cwd>', '目标项目路径，默认当前目录')
     .action(async (component: string, options?: { cwd?: string }) => {
       const targetCwd = path.resolve(options?.cwd ?? process.cwd());

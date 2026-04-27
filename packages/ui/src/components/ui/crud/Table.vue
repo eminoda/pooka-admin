@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, watch, type Component } from 'vue';
 import { functionalUpdate, getCoreRowModel, useVueTable, type RowSelectionState } from '@tanstack/vue-table';
-import type { CrudActionConfig, CrudColumn, CrudRowSelectionConfig } from '@pooka/core';
+import type { CrudActionConfig, CrudColumn, CrudRowSelectionConfig } from 'pooka-core';
 
 interface TableRow {
   id?: string | number;

@@ -1,5 +1,5 @@
 import { defineConfig } from 'unocss';
-import { presetPooka } from '@pooka/ui/preset';
+import { presetPooka } from 'pooka-ui/preset';
 
 /** 菜单 `meta.icon` 为运行时字符串，需 safelist 才能生成对应图标 CSS */
 const MENU_ICON_SAFELIST = [

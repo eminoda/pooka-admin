@@ -1,5 +1,5 @@
 {
-  "name": "@pooka/core",
+  "name": "pooka-core",
   "version": "0.0.1-alpha.1",
   "private": false,
   "description": "Pooka core — ProTable, ProForm, JSON schema renderer",
@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "@tanstack/vue-query": "^5.90.5",
-    "@pooka/config": "workspace:*",
+    "pooka-config": "workspace:*",
     "eslint": "^9.23.0",
     "typescript": "^5.8.2",
     "vue": "^3.5.13"

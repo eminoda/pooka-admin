@@ -12,11 +12,11 @@ export default defineConfig({
         replacement: path.resolve(__dirname, '../../docs'),
       },
       {
-        find: '@pooka/ui/preset',
+        find: 'pooka-ui/preset',
         replacement: path.resolve(__dirname, '../../packages/ui/src/preset.ts'),
       },
       {
-        find: /^@pooka\/ui$/,
+        find: /^pooka-ui$/,
         replacement: path.resolve(__dirname, '../../packages/ui/src/index.ts'),
       },
       {
@@ -24,15 +24,15 @@ export default defineConfig({
         replacement: path.resolve(__dirname, './src'),
       },
       {
-        find: '@pooka/ui/styles.css',
+        find: 'pooka-ui/styles.css',
         replacement: path.resolve(__dirname, '../../packages/ui/src/styles.css'),
       },
       {
-        find: '@pooka/core',
+        find: 'pooka-core',
         replacement: path.resolve(__dirname, '../../packages/core/src/index.ts'),
       },
       {
-        find: '@pooka/shared',
+        find: 'pooka-shared',
         replacement: path.resolve(__dirname, '../../packages/shared/src/index.ts'),
       },
     ],

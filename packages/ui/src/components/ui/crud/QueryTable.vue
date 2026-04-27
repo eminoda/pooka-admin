@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { CrudActionConfig, CrudColumn, CrudSearchField } from '@pooka/core';
+import type { CrudActionConfig, CrudColumn, CrudSearchField } from 'pooka-core';
 
 interface TableRow {
   id?: string | number;
