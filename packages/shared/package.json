@@ -1,7 +1,7 @@
 {
   "name": "@pooka/shared",
   "version": "0.0.1-alpha.1",
-  "private": true,
+  "private": false,
   "description": "Shared utils, composables, and types for Pooka Admin",
   "type": "module",
   "main": "./dist/index.js",

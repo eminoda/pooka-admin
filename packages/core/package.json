@@ -1,7 +1,7 @@
 {
   "name": "@pooka/core",
   "version": "0.0.1-alpha.1",
-  "private": true,
+  "private": false,
   "description": "Pooka core — ProTable, ProForm, JSON schema renderer",
   "type": "module",
   "main": "./dist/index.js",
